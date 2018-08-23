@@ -1,6 +1,8 @@
 ---
 - name: Prepare OpenShift Hosts
-  hosts: all
+  hosts:
+    - masters
+    - nodes
   remote_user: ec2-user
   become: true
 

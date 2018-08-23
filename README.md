@@ -2,7 +2,7 @@ Terraform configuration for deploying OpenShift on AWS
 
 
 # Preface
-This project brings Openshift Container Platform v3.10 in AWS up and running in an Automated manner.
+This project brings Openshift Container Platform v3.9 in AWS up and running in an Automated manner.
 
 If you follow along, you should be able to successfully
 - Prepare and brings up AWS virtual infrastructure via Terraform.

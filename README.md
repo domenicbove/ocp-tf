@@ -104,9 +104,11 @@ Ansible is a configuration tool by Red Hat that is being used in this project fo
 - installing OpenShift Container Platform 3.9
 
 Files used in this project located in **ansible** folder:
-- bastion.yml - main file configures Bastin host and trigger openshift node preparation and deployment.
-- prepare_openshift_hosts.yml - 
-- hosts_3.9 - inventory file for Openshift Deployment based on version 3.9
+- hosts - inventory file for Bastion host
+- ansible/bastion.yml - main file configures Bastin host and trigger openshift node preparation and deployment.
+
+- ansible/hosts_3.9 - inventory file for Openshift Deployment based on version 3.9
+- ansible/prepare_openshift_hosts.yml - prepares Openshift nodes for installation
 
 To get things started run the following command:  
 ```

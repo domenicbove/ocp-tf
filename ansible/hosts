@@ -5,8 +5,6 @@
 # https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
 # https://docs.ansible.com/ansible/2.5/reference_appendices/config.html#ansible-configuration-settings
 
-dns_prefix=demo.li9.com
-
 [all:vars]
 ansible_ssh_user = ec2-user
 ansible_ssh_private_key_file = ~/.ssh/id_rsa
@@ -91,10 +89,10 @@ openshift_logging_storage_kind=dynamic
 openshift_logging_es_pvc_size=50Gi
 openshift_logging_es_pvc_storage_class_name="glusterfs-storage"       
 
-openshift_storage_glusterfs_block_deploy=false
+openshift_storage_glusterfs_block_deploy=true
 openshift_storage_glusterfs_registry_block_deploy=true
 openshift_storage_glusterfs_registry_block_storageclass=true
-openshift_storage_glusterfs_registry_block_storageclass_default=false
+openshift_storage_glusterfs_registry_block_storageclass_default=true
 
 # disable some features
 openshift_disable_check=disk_availability,docker_storage,memory_availability, docker_image_availability

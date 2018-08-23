@@ -15,9 +15,12 @@ The Architecture looks like the following:
 
 ![GitHub Logo](ocp-ha-on-aws.png)
 
+The original RedHat Architecture is located [here](https://access.redhat.com/documentation/en-us/reference_architectures/2018/html/deploying_and_managing_openshift_3.9_on_amazon_web_services/reference_architecture_summary)
+
 # Requirements
 - Valid AWS account with Admin priviledges
 - Valid Red Hat Enterprise Openshift Subscription
+- Laptop running your favourite OS. 
 
 # Automated scripts
 If you do not want to read the details of this project and just get things done, then follow the procedure below:

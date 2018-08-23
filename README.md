@@ -28,6 +28,7 @@ If you do not want to read the details of this project and just get things done,
 - in variables.tf, you will need to specify the following variables:
     -  zone_id - DNS zone id in AWS to create required records
     -  dns_prefix - DNS prefix for OpenShift nodes
+- in hosts file you need to set to proper domain and replace **demo.li9.com**
 
 *You can adjust other variables if you want*
 
@@ -36,7 +37,7 @@ terraform init
 terraform plan
 terraform apply --auto-approve
 terraform show
-ansible-playbook bastion.yml
+cd ansible; ansible-playbook bastion.yml
 ```
 
 **While running ansible-playbook** you will be asked to provide Redhat valid credentials to attach and download required packages, AWS API SECRET and ACCESS KEYS and DNS_PREFIX to generate lets encrypt certificates and create AWS instances with the right FQDN.
@@ -104,10 +105,8 @@ Ansible is a configuration tool by Red Hat that is being used in this project fo
 - installing OpenShift Container Platform 3.9
 
 Files used in this project located in **ansible** folder:
-- hosts - inventory file for Bastion host
+- ansible/hosts - main inventory for ansible
 - ansible/bastion.yml - main file configures Bastin host and trigger openshift node preparation and deployment.
-
-- ansible/hosts_3.9 - inventory file for Openshift Deployment based on version 3.9
 - ansible/prepare_openshift_hosts.yml - prepares Openshift nodes for installation
 
 To get things started run the following command:  

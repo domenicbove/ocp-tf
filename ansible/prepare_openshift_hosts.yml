@@ -1,0 +1,76 @@
+---
+- name: Prepare OpenShift Hosts
+  hosts: all
+  remote_user: ec2-user
+  become: true
+
+  # vars_prompt:
+  # - name: "RHN_USERNAME"
+  #   prompt: "Enter your RHN username"
+  #   private: no
+  # - name: "RHN_PASSWORD"
+  #   prompt: "Enter your RHN password"
+  #   private: yes
+
+# attach the right pool https://access.redhat.com/documentation/en-us/red_hat_subscription_management/1/html/quick_registration_for_rhel/sub-cli
+  tasks:
+  - name: Set hostnames
+    hostname:
+      name: '{{ inventory_hostname }}'
+
+  - name: Unregister from redhat
+    command: 'subscription-manager unregister'
+    ignore_errors: True
+
+  - name: Register systems and attach them to the pool
+    redhat_subscription:
+      state: present
+      force_register: yes
+      username: '{{ RHN_USERNAME }}'
+      password: '{{ RHN_PASSWORD }}'
+      pool: '8a85f98c6053dabe016054d0bc08105c'
+
+  - name: Delete default repos
+    file:
+      path: '/etc/yum.repos.d/{{ item }}'
+      state: absent
+    with_items:
+      - redhat-rhui-client-config.repo
+      - redhat-rhui.repo
+      - rhui-load-balancers.conf
+
+  - name: Disable all the repositories
+    command: 'subscription-manager repos --disable="*"'
+    ignore_errors: True
+
+  - name: Enable OpenShift repositories
+    command: 'subscription-manager repos \
+              --enable=rhel-7-server-rpms \
+              --enable=rhel-7-server-extras-rpms \
+              --enable=rhel-7-server-ose-3.9-rpms \
+              --enable=rhel-7-fast-datapath-rpms \
+              --enable=rhel-7-server-ansible-2.6-rpms'
+
+  - name: Install packages
+    yum:
+      name: '{{item}}'
+    with_items:
+      - git
+      - nano
+      - wget
+      - net-tools
+      - bridge-utils
+      - iptables-services
+      - bind-utils
+      - bash-completion
+      - kexec-tools
+      - sos
+      - psacct
+      - docker
+      - ansible
+
+  - name: Update systems
+    yum:
+      name: '*'
+      state: latest
+...

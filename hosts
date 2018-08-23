@@ -1,0 +1,22 @@
+# ansible -m ping all --list-hosts
+# ansible -m ping all
+
+# https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+# https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
+# https://docs.ansible.com/ansible/2.5/reference_appendices/config.html#ansible-configuration-settings
+
+
+[all:vars]
+ansible_ssh_user = ec2-user
+ansible_ssh_private_key_file = ~/.ssh/id_rsa
+
+[local]
+localhost ansible_connection=local
+
+[bastion]
+bastion1.demo.li9.com
+
+
+
+
+

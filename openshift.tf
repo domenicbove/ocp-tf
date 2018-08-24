@@ -423,7 +423,7 @@ resource "aws_route53_record" "bastion" {
 
 resource "aws_route53_record" "console" {
   zone_id = "${var.zone_id}"
-  name = "console"
+  name = "mgmt"
   type = "CNAME"
   ttl = "300"
   records = ["${aws_lb.apps.dns_name}"]

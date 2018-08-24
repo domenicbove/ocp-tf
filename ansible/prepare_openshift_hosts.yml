@@ -6,14 +6,6 @@
   remote_user: ec2-user
   become: true
 
-  # vars_prompt:
-  # - name: "RHN_USERNAME"
-  #   prompt: "Enter your RHN username"
-  #   private: no
-  # - name: "RHN_PASSWORD"
-  #   prompt: "Enter your RHN password"
-  #   private: yes
-
 # attach the right pool https://access.redhat.com/documentation/en-us/red_hat_subscription_management/1/html/quick_registration_for_rhel/sub-cli
   tasks:
   - name: Set hostnames
@@ -49,7 +41,7 @@
     command: 'subscription-manager repos \
               --enable=rhel-7-server-rpms \
               --enable=rhel-7-server-extras-rpms \
-              --enable=rhel-7-server-ose-3.9-rpms \
+              --enable=rhel-7-server-ose-3.10-rpms \
               --enable=rhel-7-fast-datapath-rpms \
               --enable=rhel-7-server-ansible-2.6-rpms'
 

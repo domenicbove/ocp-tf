@@ -88,17 +88,9 @@
         chdir: /opt/acme.sh
     with_items:
       - "./acme.sh --issue -d apps.{{dns_prefix}} -d *.apps.{{dns_prefix}}  -d registry.{{dns_prefix}} --dns dns_aws --force"
-      - "./acme.sh --issue -d console.{{dns_prefix}} --dns dns_aws --force"
+      - "./acme.sh --issue -d mgmt.{{dns_prefix}} --dns dns_aws --force"
       - "./acme.sh --issue -d registry.{{dns_prefix}} --dns dns_aws --force"
     ignore_errors: True
-
-  - name: Verify Wildcard Certificates
-    shell: "openssl x509 -text -noout -in ~/.acme.sh/*.apps.{{dns_prefix}}/*.apps.{{dns_prefix}} | grep DNS"
-    register: reg_wildcard
-
-  - name: Verify Wildcard Certificates
-    shell: "openssl x509 -text -noout -in ~/.acme.sh/console.{{dns_prefix}}/console.{{dns_prefix}} | grep DNS"
-    register: reg_console
 
   - name: Adjust ssh_config file
     blockinfile:
@@ -125,18 +117,18 @@
     args:
         chdir: /opt/ocp-tf
     with_items:
-    - "ansible-playbook -i ansible/hosts_3.9 ansible/prepare_openshift_hosts.yml -e RHN_USERNAME={{RHN_USERNAME}} -e RHN_PASSWORD={{RHN_PASSWORD}}"
+    - "ansible-playbook -i ansible/hosts ansible/prepare_openshift_hosts.yml -e RHN_USERNAME={{RHN_USERNAME}} -e RHN_PASSWORD={{RHN_PASSWORD}}"
 
   - name: Running pre-requisites and installing OpenShift Cluster
     shell: "{{item}}"
     args:
         chdir: /opt/openshift-ansible
     with_items:
-    - ansible-playbook -i /opt/ocp-tf/ansible/hosts_3.9 playbooks/prerequisites.yml -b
-    - ansible-playbook -i /opt/ocp-tf/ansible/hosts_3.9 playbooks/deploy_cluster.yml -b
+    - ansible-playbook -i /opt/ocp-tf/ansible/hosts playbooks/prerequisites.yml -b
+    - ansible-playbook -i /opt/ocp-tf/ansible/hosts playbooks/deploy_cluster.yml -b
 
-# COMPLETE UNINSTALL: ansible-playbook -i /opt/ocp-tf/ansible/hosts_3.9 playbooks/adhoc/uninstall.yml -b
-# STORAGE UNINSTALL: ansible-playbook -i  /opt/ocp-tf/ansible/hosts_3.9 -e "openshift_storage_glusterfs_wipe=true" playbooks/openshift-glusterfs/uninstall.yml
-# REDEPLOY CERTS: ansible-playbook -i  /opt/ocp-tf/ansible/hosts_3.9 playbooks/redeploy-certificates.yml -b
-# RENEW CERTS: ansible-playbook -i  /opt/ocp-tf/ansible/hosts_3.9 playbooks/openshift-checks/certificate_expiry/easy-mode.yaml -b
-# DEPLOY STORAGE: ansible-playbook -i  /opt/ocp-tf/ansible/hosts_3.9 playbooks/openshift-glusterfs/config.yml -b
+# COMPLETE UNINSTALL: ansible-playbook -i /opt/ocp-tf/ansible/hosts playbooks/adhoc/uninstall.yml -b
+# STORAGE UNINSTALL: ansible-playbook -i  /opt/ocp-tf/ansible/hosts -e "openshift_storage_glusterfs_wipe=true" playbooks/openshift-glusterfs/uninstall.yml
+# REDEPLOY CERTS: ansible-playbook -i  /opt/ocp-tf/ansible/hosts playbooks/redeploy-certificates.yml -b
+# RENEW CERTS: ansible-playbook -i  /opt/ocp-tf/ansible/hosts playbooks/openshift-checks/certificate_expiry/easy-mode.yaml -b
+# DEPLOY STORAGE: ansible-playbook -i  /opt/ocp-tf/ansible/hosts playbooks/openshift-glusterfs/config.yml -b

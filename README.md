@@ -2,12 +2,12 @@ Terraform configuration for deploying OpenShift on AWS
 
 
 # Preface
-This project brings Openshift Container Platform v3.9 in AWS up and running in an Automated manner.
+This project brings Openshift Container Platform v3.10 in AWS up and running in an Automated manner.
 
 If you follow along, you should be able to successfully
 - Prepare and brings up AWS virtual infrastructure via Terraform.
 - Prepare AWS Bastion and OpenShift nodes 
-- Install OpenShift Container Platform 3.9 on AWS on RHEL7.5
+- Install OpenShift Container Platform 3.10 on AWS on RHEL7.5
 
 
 # Artchitecure
@@ -15,7 +15,7 @@ The Architecture looks like the following:
 
 ![GitHub Logo](ocp-ha-on-aws.png)
 
-The original RedHat Architecture is located [here](https://access.redhat.com/documentation/en-us/reference_architectures/2018/html/deploying_and_managing_openshift_3.9_on_amazon_web_services/reference_architecture_summary)
+The original RedHat Architecture is located [here](https://access.redhat.com/documentation/en-us/reference_architectures/2018/html/deploying_and_managing_openshift_3.10_on_amazon_web_services/reference_architecture_summary)
 
 # Requirements
 - Valid AWS account with Admin priviledges
@@ -105,7 +105,7 @@ terraform destroy -force
 ## Ansible
 Ansible is a configuration tool by Red Hat that is being used in this project for:
 - prepare AWS Bastion and OpenShift instances ready
-- installing OpenShift Container Platform 3.9
+- installing OpenShift Container Platform 3.10
 
 Files used in this project located in **ansible** folder:
 - ansible/hosts - main inventory for ansible
@@ -117,7 +117,7 @@ To get things started run the following command:
 ansible-playbook bastion.yml
 ```
 
-After the installation. You should have your OpenShift Container Platform 3.9 Cluster up and running. 
+After the installation. You should have your OpenShift Container Platform 3.10 Cluster up and running. 
 Open your browser and naviage to console.{{DNS_PREFIX}}, where domain prefix that you specified by running **ansible-playbook bastion.yml**.
 
 Application deployment on Openshift goes beyond the scope of this project.

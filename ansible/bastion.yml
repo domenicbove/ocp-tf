@@ -68,7 +68,7 @@
     git:
       repo: https://github.com/openshift/openshift-ansible.git
       dest: /opt/openshift-ansible
-      version: release-3.9
+      version: release-3.10
 
   - name: downloading acme.sh source code
     git:

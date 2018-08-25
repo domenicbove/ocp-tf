@@ -284,6 +284,9 @@ resource "aws_instance" "bastion" {
     volume_size = "20"
     delete_on_termination = true
   }
+  lifecycle {
+    prevent_destroy = true
+  }  
   provisioner "remote-exec" {
     inline = [ "sudo subscription-manager unregister" ]
     when = "destroy"

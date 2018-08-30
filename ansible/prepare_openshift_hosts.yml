@@ -63,7 +63,7 @@
       - docker
       - ansible
 
-  - name: Update systems
+  - name: Update system packages
     yum:
       name: '*'
       state: latest

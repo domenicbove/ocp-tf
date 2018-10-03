@@ -112,6 +112,15 @@
       - "{{ssh_key}}"
       - "{{ssh_key}}.pub"
 
+  - name: copy hosts file
+    copy:
+      src: ./hosts
+      dest: /opt/ocp-tf
+      owner: root
+      group: root
+      mode: 0644
+      force: yes
+
   - name: Getting hosts ready
     shell: "{{item}}"
     args:

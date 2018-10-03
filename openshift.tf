@@ -4,10 +4,54 @@
 # terraforming aws --tfstate --merge terraform.tfstate --overwrite
 # terraforming sg --tfstate --merge terraform.tfstate --overwrite
 
+
+terraform {
+  backend "s3" {
+  # encrypt = true
+  bucket = "tfstate-li9"
+  dynamodb_table = "terraform-state-lock"
+  region = "us-west-2"
+  key = "terraform.tfstate"
+  }
+}
+
 provider "aws" {
   # access_key = ""
   # secret_key = ""
   region = "${var.region}"
+}
+
+###########
+# Debugging
+###########
+
+resource "aws_s3_bucket" "tfstate-li9" {
+  bucket = "tfstate-li9" 
+  versioning {
+    enabled = true
+  }
+  lifecycle {
+    prevent_destroy = true
+  }
+  tags {
+    Name = "S3 Remote Terraform State Store for AWS Li9 account"
+  }      
+}
+
+resource "aws_dynamodb_table" "terraform-state-lock" {
+  name = "terraform-state-lock"
+  hash_key = "LockID"
+  read_capacity = 20
+  write_capacity = 20
+ 
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+ 
+  tags {
+    Name = "DynamoDB Terraform State Lock Table"
+  }
 }
 
 output "aws_instance" {

@@ -111,11 +111,26 @@ Files used in this project located in **ansible** folder:
 - ansible/hosts - main inventory for ansible
 - ansible/bastion.yml - main file configures Bastin host and trigger openshift node preparation and deployment.
 - ansible/prepare_openshift_hosts.yml - prepares Openshift nodes for installation
+- prerequisites.yml - A pre-check playbook for Openshift Project
+- deploy_cluster.yml - Main installation playbook to get OpenShift up and running.
 
-To get things started run the following command:  
+To get things started run the following command that will prepare bastion host:
 ```
 ansible-playbook bastion.yml
 ```
+
+The next thing we nee to do is ssh into bastion host and run the following playbooks:
+```
+cd /opt/ocp-tf/ansible
+ansible-playbook -i hosts prepare_openshift_hosts.yml
+```
+
+```
+cd /opt/openshift-ansible
+- ansible-playbook -i /opt/ocp-tf/ansible/hosts playbooks/prerequisites.yml -b
+- ansible-playbook -i /opt/ocp-tf/ansible/hosts playbooks/deploy_cluster.yml -b
+```
+
 
 After the installation. You should have your OpenShift Container Platform 3.10 Cluster up and running. 
 Open your browser and naviage to console.{{DNS_PREFIX}}, where domain prefix that you specified by running **ansible-playbook bastion.yml**.

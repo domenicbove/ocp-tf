@@ -6,23 +6,24 @@
   remote_user: ec2-user
   become: true
 
-  # vars_prompt:
-  # - name: "RHN_USERNAME"
-  #   prompt: "Enter your RHN username"
-  #   private: no
-  # - name: "RHN_PASSWORD"
-  #   prompt: "Enter your RHN password"
-  #   private: yes
+  vars_prompt:
+  - name: "RHN_USERNAME"
+    prompt: "Enter Red Hat username"
+    default: "{{ lookup('env','RHN_USERNAME') }}"
+    private: no
+  - name: "RHN_PASSWORD"
+    prompt: "Enter  Red Hat password"
+    default: "{{ lookup('env','RHN_PASSWORD') }}"
+    private: yes
+  - name: "RHN_POOL"
+    prompt: "Enter  Red Hat Subscription Pool ID"
+    default: "8a85f98c60c2c2b40160c324e5d21d70"
+    private: yes
 
-# attach the right pool https://access.redhat.com/documentation/en-us/red_hat_subscription_management/1/html/quick_registration_for_rhel/sub-cli
   tasks:
   - name: Set hostnames
     hostname:
       name: '{{ inventory_hostname }}'
-
-  - name: Unregister from redhat
-    command: 'subscription-manager unregister'
-    ignore_errors: True
 
   - name: Register systems and attach them to the pool
     redhat_subscription:
@@ -31,17 +32,6 @@
       username: '{{ RHN_USERNAME }}'
       password: '{{ RHN_PASSWORD }}'
       pool: '{{ RHN_POOL }}'
-      ### todo this should be a var
-      #pool: '8a85f98c60c2c2b40160c324e5d21d70'
-
-  - name: Delete default repos
-    file:
-      path: '/etc/yum.repos.d/{{ item }}'
-      state: absent
-    with_items:
-      - redhat-rhui-client-config.repo
-      - redhat-rhui.repo
-      - rhui-load-balancers.conf
 
   - name: Disable all the repositories
     command: 'subscription-manager repos --disable="*"'
@@ -51,30 +41,22 @@
     command: 'subscription-manager repos \
               --enable=rhel-7-server-rpms \
               --enable=rhel-7-server-extras-rpms \
-              --enable=rhel-7-server-ose-3.9-rpms \
-              --enable=rhel-7-fast-datapath-rpms \
+              --enable=rhel-7-server-ose-3.11-rpms \
               --enable=rhel-7-server-ansible-2.6-rpms'
 
   - name: Install packages
     yum:
-      name: '{{item}}'
-    with_items:
-      - git
-      - nano
-      - wget
-      - net-tools
-      - bridge-utils
-      - iptables-services
-      - bind-utils
-      - bash-completion
-      - kexec-tools
-      - sos
-      - psacct
-      - docker
-      - ansible
-
-  - name: Update systems
-    yum:
-      name: '*'
+      name:
+        - wget
+        - git
+        - net-tools
+        - bind-utils
+        - yum-utils
+        - iptables-services
+        - bridge-utils
+        - bash-completion
+        - kexec-tools
+        - sos
+        - psacct
+        - docker
       state: latest
-...

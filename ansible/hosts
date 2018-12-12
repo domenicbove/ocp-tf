@@ -30,13 +30,11 @@ glusterfs_registry
 # general info
 ansible_ssh_user=ec2-user
 openshift_deployment_type=openshift-enterprise
-deployment_type=openshift-enterprise
 
 # SDN network info
 osm_cluster_network_cidr=10.28.0.0/14
 openshift_portal_net=172.28.0.0/16
-# openshift_use_openshift_sdn=true
-# os_sdn_network_plugin_name=redhat/openshift-ovs-multitenant
+os_sdn_network_plugin_name=redhat/openshift-ovs-multitenant
 
 # DNS and API
 openshift_master_api_port=8443
@@ -51,13 +49,13 @@ openshift_master_htpasswd_users={'admin': '$apr1$24ue.G42$FE/lHR9rGNJBl0MO0i2P8/
 # Certificates
 # https://docs.openshift.com/container-platform/3.9/install_config/redeploying_certificates.html
 #
-openshift_master_overwrite_named_certificates=true
-openshift_master_named_certificates=[{"certfile": "/root/.acme.sh/console.domenicbove.com/console.domenicbove.com.cer", "keyfile": "/root/.acme.sh/console.domennicbove.com/console.domenicbove.com.key", "names": ["console.domenicbove.com"], "cafile": "/root/.acme.sh/console.domenicbove.com/fullchain.cer"}]
-openshift_hosted_router_certificate={"certfile": "/root/.acme.sh/*.apps.domenicbove.com/*.apps.domenicbove.com.cer", "keyfile": "/root/.acme.sh/*.apps.domenicbove.com/*.apps.domenicbove.com.key", "cafile": "/root/.acme.sh/*.apps.domenicbove.com/fullchain.cer"}
-openshift_hosted_registry_routecertificates={"certfile": "/root/.acme.sh/registry.domenicbove.com/registry.domenicbove.com.cer", "keyfile": "/root/.acme.sh/registry.domenicbove.com/registry.domenicbove.com.key", "cafile": "/root/.acme.sh/registry.domenicbove.com/fullchain.cer"}
-openshift_hosted_registry_routetermination=reencrypt
-openshift_hosted_registry_routehost=registry.apps.domenicbove.com
-openshift_docker_insecure_registries=docker-registry.default.svc:5000,docker-registry.default.svc.cluster.local:5000
+#openshift_master_overwrite_named_certificates=true
+#openshift_master_named_certificates=[{"certfile": "/root/.acme.sh/console.domenicbove.com/console.domenicbove.com.cer", "keyfile": "/root/.acme.sh/console.domennicbove.com/console.domenicbove.com.key", "names": ["console.domenicbove.com"], "cafile": "/root/.acme.sh/console.domenicbove.com/fullchain.cer"}]
+#openshift_hosted_router_certificate={"certfile": "/root/.acme.sh/*.apps.domenicbove.com/*.apps.domenicbove.com.cer", "keyfile": "/root/.acme.sh/*.apps.domenicbove.com/*.apps.domenicbove.com.key", "cafile": "/root/.acme.sh/*.apps.domenicbove.com/fullchain.cer"}
+#openshift_hosted_registry_routecertificates={"certfile": "/root/.acme.sh/registry.domenicbove.com/registry.domenicbove.com.cer", "keyfile": "/root/.acme.sh/registry.domenicbove.com/registry.domenicbove.com.key", "cafile": "/root/.acme.sh/registry.domenicbove.com/fullchain.cer"}
+#openshift_hosted_registry_routetermination=reencrypt
+#openshift_hosted_registry_routehost=registry.apps.domenicbove.com
+#openshift_docker_insecure_registries=docker-registry.default.svc:5000,docker-registry.default.svc.cluster.local:5000
 
 # Metrics
 openshift_metrics_install_metrics=true

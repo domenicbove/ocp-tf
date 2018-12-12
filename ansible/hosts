@@ -13,7 +13,7 @@ ansible_ssh_private_key_file = ~/.ssh/id_rsa
 localhost ansible_connection=local
 
 [bastion]
-bastion1.demo.li9.com
+bastion1.domenicbove.com
 
 ######################
 ### Openshift Part ###
@@ -41,23 +41,23 @@ openshift_portal_net=172.28.0.0/16
 # DNS and API
 openshift_master_api_port=8443
 openshift_master_console_port=8443
-openshift_master_cluster_public_hostname=console.demo.li9.com
-openshift_master_cluster_hostname=console.demo.li9.com
-openshift_master_default_subdomain=apps.demo.li9.com
+openshift_master_cluster_public_hostname=console.domenicbove.com
+openshift_master_cluster_hostname=console.domenicbove.com
+openshift_master_default_subdomain=apps.domenicbove.com
 openshift_master_identity_providers=[{'name': 'htpasswd_auth','login': 'true', 'challenge': 'true','kind': 'HTPasswdPasswordIdentityProvider','filename': '/etc/origin/master/htpasswd'}]
 # hashed password for users - xxxxxx123456
 openshift_master_htpasswd_users={'admin': '$apr1$24ue.G42$FE/lHR9rGNJBl0MO0i2P8/', 'developer': '$apr1$24ue.G42$FE/lHR9rGNJBl0MO0i2P8/'}
 
 # Certificates
 # https://docs.openshift.com/container-platform/3.9/install_config/redeploying_certificates.html
-# 
-# openshift_master_overwrite_named_certificates=true
-# openshift_master_named_certificates=[{"certfile": "/root/.acme.sh/console.demo.li9.com/console.demo.li9.com.cer", "keyfile": "/root/.acme.sh/console.demo.li9.com/console.demo.li9.com.key", "names": ["console.demo.li9.com"], "cafile": "/root/.acme.sh/console.demo.li9.com/fullchain.cer"}]
-# openshift_hosted_router_certificate={"certfile": "/root/.acme.sh/*.apps.demo.li9.com/*.apps.demo.li9.com.cer", "keyfile": "/root/.acme.sh/*.apps.demo.li9.com/*.apps.demo.li9.com.key", "cafile": "/root/.acme.sh/*.apps.demo.li9.com/fullchain.cer"}
-# openshift_hosted_registry_routecertificates={"certfile": "/root/.acme.sh/registry.demo.li9.com/registry.demo.li9.com.cer", "keyfile": "/root/.acme.sh/registry.demo.li9.com/registry.demo.li9.com.key", "cafile": "/root/.acme.sh/registry.demo.li9.com/fullchain.cer"} 
-# openshift_hosted_registry_routetermination=reencrypt 
-# openshift_hosted_registry_routehost=registry.apps.demo.li9.com 
-# openshift_docker_insecure_registries=docker-registry.default.svc:5000,docker-registry.default.svc.cluster.local:5000
+#
+openshift_master_overwrite_named_certificates=true
+openshift_master_named_certificates=[{"certfile": "/root/.acme.sh/console.domenicbove.com/console.domenicbove.com.cer", "keyfile": "/root/.acme.sh/console.domennicbove.com/console.domenicbove.com.key", "names": ["console.domenicbove.com"], "cafile": "/root/.acme.sh/console.domenicbove.com/fullchain.cer"}]
+openshift_hosted_router_certificate={"certfile": "/root/.acme.sh/*.apps.domenicbove.com/*.apps.domenicbove.com.cer", "keyfile": "/root/.acme.sh/*.apps.domenicbove.com/*.apps.domenicbove.com.key", "cafile": "/root/.acme.sh/*.apps.domenicbove.com/fullchain.cer"}
+openshift_hosted_registry_routecertificates={"certfile": "/root/.acme.sh/registry.domenicbove.com/registry.domenicbove.com.cer", "keyfile": "/root/.acme.sh/registry.domenicbove.com/registry.domenicbove.com.key", "cafile": "/root/.acme.sh/registry.domenicbove.com/fullchain.cer"}
+openshift_hosted_registry_routetermination=reencrypt
+openshift_hosted_registry_routehost=registry.apps.domenicbove.com
+openshift_docker_insecure_registries=docker-registry.default.svc:5000,docker-registry.default.svc.cluster.local:5000
 
 # Metrics
 openshift_metrics_install_metrics=true
@@ -78,16 +78,16 @@ openshift_hosted_registry_storage_kind=glusterfs
 
 openshift_metrics_hawkular_nodeselector={"role":"infra"}
 openshift_metrics_cassandra_nodeselector={"role":"infra"}
-openshift_metrics_heapster_nodeselector={"role":"infra"} 
+openshift_metrics_heapster_nodeselector={"role":"infra"}
 openshift_metrics_storage_kind=dynamic
-openshift_metrics_cassanda_pvc_storage_class_name="glusterfs-storage" 
+openshift_metrics_cassanda_pvc_storage_class_name="glusterfs-storage"
 
-openshift_logging_es_nodeselector={"role":"infra"}      
-openshift_logging_kibana_nodeselector={"role":"infra"}  
-openshift_logging_curator_nodeselector={"role":"infra"} 
+openshift_logging_es_nodeselector={"role":"infra"}
+openshift_logging_kibana_nodeselector={"role":"infra"}
+openshift_logging_curator_nodeselector={"role":"infra"}
 openshift_logging_storage_kind=dynamic
 openshift_logging_es_pvc_size=50Gi
-openshift_logging_es_pvc_storage_class_name="glusterfs-storage"       
+openshift_logging_es_pvc_storage_class_name="glusterfs-storage"
 
 openshift_storage_glusterfs_block_deploy=true
 openshift_storage_glusterfs_registry_block_deploy=true
@@ -105,13 +105,13 @@ openshift_enable_service_catalog=false
 openshift_node_kubelet_args={'pods-per-core': ['10'], 'max-pods': ['250'], 'image-gc-high-threshold': ['90'], 'image-gc-low-threshold': ['80']}
 
 [masters]
-master[1:3] 
+master[1:3]
 
 [etcd]
-master[1:3] 
+master[1:3]
 
 [nodes]
-master[1:3] 
+master[1:3]
 infra[1:3] openshift_node_labels="{'region': 'infra', 'zone': 'default', 'role':'infra','node-role.kubernetes.io/infra':'true'}"
 node[1:3] openshift_node_labels="{'region': 'us-west-2', 'zone': 'west','node-role.kubernetes.io/compute':'true'}"
 
@@ -120,4 +120,3 @@ infra[1:3] glusterfs_devices='["/dev/xvdb"]'
 
 [glusterfs_registry]
 infra[1:3] glusterfs_devices='["/dev/xvdb"]'
-

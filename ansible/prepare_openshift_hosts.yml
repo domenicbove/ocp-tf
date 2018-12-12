@@ -30,7 +30,9 @@
       force_register: yes
       username: '{{ RHN_USERNAME }}'
       password: '{{ RHN_PASSWORD }}'
-      pool: '8a85f98c6053dabe016054d0bc08105c'
+      pool: '{{ RHN_POOL }}'
+      ### todo this should be a var
+      #pool: '8a85f98c60c2c2b40160c324e5d21d70'
 
   - name: Delete default repos
     file:

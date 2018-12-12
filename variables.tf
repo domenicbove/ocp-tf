@@ -9,18 +9,18 @@ variable "amis" {
 }
 
 variable "zone_id" {
-  default = "ZG1LSIRFXEMSJ"
+  default = "Z2L62E1YGFTIYL"
 }
 
 variable "dns_prefix" {
   description = "DNS prefix for instances"
-  default = ".demo.li9.com"  
+  default = ".domenicbove.com"
 }
 
 variable "instance_type" {
   # default = "t2.micro"
   # default = "t2.medium"
-  default = "t2.large"
+  default = "m4.large"
   # default = "t2.2xlarge"
 }
 
